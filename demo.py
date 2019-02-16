@@ -2,7 +2,7 @@
 import random
 import math
 
-class Cidade:
+class City:
     def __init__(self):
         self.x = random.uniform(0,1)
         self.y = random.uniform(0,1)
@@ -24,20 +24,28 @@ class Cidade:
             print(n.__str__())
     
 
+numcities = 10
+cities = [City() for _ in range(numcities)]
 
-numcidades = 10
-cidades = []
+for city in cities:
+	# numero randomico de vizinhos, de 1 a 10
+	nn = random.randint(1, len(cities) - 1)
+	# lista com todas as cidades - que esta no city do for
+	othercities = list(filter(lambda c: c != city, cities))
+	# se o numero de vizinho for menor que a quantidade escolhida em nn
+	while len(city.neigh) - 1 < nn:
+		# escolhendo uma cidade aleatoria
+		rn = random.choice(othercities)
+		# se a cidade nao estiver na lista de vizinhos, adiciona
+		if rn not in city.neigh:
+			city.addneigh(rn)
 
-for _ in range(numcidades):
-    cidades.append(Cidade())
 
-def generateconnections():
-    for c in cidades:
-        porcent = random.uniform(0,1)
-        while porcent > .5:
-            c.addneigh(random.choice(cidades))
-            porcent = random.uniform(0,1)       
+		
 
 
-generateconnections()
+
+
+
+
 
