@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
-import random
+import random as r
 import math
+import os
+
 
 class City:
-	def __init__(self):
-		self.x = random.uniform(0,1)
-		self.y = random.uniform(0,1)
-		self.neigh = []
+	def __init__(self, start=False, end=False):		
+		if start:
+			self.x, self.y = 0, 0 
+		elif end:	
+			self.x , self.y = 1, 1
+		else:
+			self.x, self.y = r.random(), r.random()
+
+		self.neigh = []	
 
 	def calcdistance(self, cidade):
 		x1, y1 = self.x, self.y
@@ -25,39 +32,34 @@ class City:
 		for n in self.neigh:
 			print("\t" + n.__str__())
 		
+def generate():	
+	numcities = int(os.environ.get('NUM')) if 'NUM' in os.environ else 4
+	cities = [City(start=True), City(end=True)] + [City() for _ in range(numcities)]	
 
-numcities = 10
-cities = [City() for _ in range(numcities)]	
+	lenc = len(cities) // 2
+	for city in cities:
+		nn = r.randint(1, lenc)
+		othercities = list(filter(lambda c: c != city, cities))	
+	
+		while len(city.neigh) - 1 < nn:
+			# escolhendo uma cidade aleatoria
+			rn = r.choice(othercities)
 
-for city in cities:
-	# numero randomico de vizinhos, de 1 a 10
-	#nn = random.randint(1, len(cities)//2)
-	nn = random.randint(1, 3);
+			# se a cidade nao estiver na lista de vizinhos, adiciona
+			if rn not in city.neigh:
+				city.addneigh(rn)
+				othercities = list(filter(lambda c: c != rn, othercities))
 
-	# lista com todas as cidades - que esta no city do for
-	othercities = list(filter(lambda c: c != city, cities))	
+	return cities
 
-	# se o numero de vizinho for menor que a quantidade escolhida em nn
-	while len(city.neigh) - 1 < nn:
-		# escolhendo uma cidade aleatoria
-		rn = random.choice(othercities)
-
-		# se a cidade nao estiver na lista de vizinhos, adiciona
-		if rn not in city.neigh:
-			city.addneigh(rn)
-			othercities = list(filter(lambda c: c != rn, othercities))
-
-
-def export():
+def export(cities):
 	lc = {}
 	for i,c in enumerate(cities):
 		lc[i] = c.__str__()
 		lc[i]['neighbors'] = [cities.index(n) for n in c.neigh]
 		
-	
 	return lc
 		
-
 
 
 from flask import Flask, json
@@ -68,12 +70,17 @@ CORS(app)
 
 @app.route("/")
 def helloworld():
-	ej = export()	
+	cities = generate()
+	ej = export(cities)	
 	return json.dumps(ej)
+
+
+@app.route("/generate")
+def newgraph():
+	generate()
+	return json.dumps({"generate" : True })
 
 
 if __name__ == '__main__':
 	app.run(debug=True)
-
-
 

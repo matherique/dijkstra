@@ -2,6 +2,7 @@ let cidades = {}
 let w = 500;
 let h = 500;
 let c = []
+let b = 50
 
 function preload(){
    cidades = loadJSON('http://localhost:5000');
@@ -27,8 +28,8 @@ function draw () {
 
 class City {
    constructor(x, y, neigh) {
-      this.x = x * w;
-      this.y = y * h;
+      this.x = (x == 0)? b : x * (w - b);
+      this.y = (y == 0)? b : y * (h - b);
       this.neigh = neigh
    }
       
