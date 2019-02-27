@@ -14,7 +14,7 @@ Libraries Used
 
 Usage
 -------------
-```
+```bash
 # generate graph and start flask server 
 ./demo.py
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask_cors import CORS
-from flask import Flask, json
+from flask import Flask, json, render_template
 import random as r
 import math
 import os
@@ -39,10 +39,10 @@ def generate():
 
     lenc = len(cities) // 2
     for city in cities:
-        nn = r.randint(1, lenc - 1)
+        nn = r.randint(1, lenc)
         othercities = list(filter(lambda c: c != city, cities))
 
-        while len(city.neigh) - 2  < nn:
+        while len(city.neigh) - 1 < nn:
             # escolhendo uma cidade aleatoria
             rn = r.choice(othercities)
 
@@ -63,21 +63,22 @@ def export(cities):
     return lc
 
 
+# FLASK SERVER
 app = Flask(__name__)
 CORS(app)
 
 
 @app.route("/")
-def helloworld():
+def home():
+    return render_template('index.html')
+
+
+@app.route("/graph")
+def getgraph():    
     cities = generate()
     ej = export(cities)
     return json.dumps(ej)
 
-
-@app.route("/generate")
-def newgraph():
-    generate()
-    return json.dumps({"generate": True})
 
 
 if __name__ == '__main__':
