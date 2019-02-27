@@ -23,7 +23,6 @@ class City:
 
     def __str__(self):
         return {'x': self.x, 'y': self.y}
-        # return 'x: %f y: %f' % (self.x, self.y)
 
     def addneigh(self, neigh):
         self.neigh.append(neigh)
@@ -68,6 +67,7 @@ def export(cities):
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route("/")
 def home():
     return render_template('index.html')
@@ -80,8 +80,6 @@ def getgraph():
     return json.dumps(ej)
 
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
