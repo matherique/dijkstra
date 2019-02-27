@@ -20,7 +20,3 @@ Usage
 
 # generate graph with 10 nodes and start flask server
 NUM=20 ./demo.py
-
-# to start server http 
-python3 -m SimpleHTTPServer PORT
-```
