@@ -1,7 +1,7 @@
 Dijkstra 
 ------------
 
-Generate a random graph with python and expose the nodes and arcs with flask app to a javascrip application using [p5.js](https://p5js.org) library
+Generate a random graph with python and expose the nodes and arcs with flask app in api form to a javascript application using [p5.js](https://p5js.org) library
 
 
 Libraries Used
@@ -20,3 +20,9 @@ Usage
 
 # generate graph with 10 nodes and start flask server
 NUM=20 ./demo.py
+```
+
+TODO
+-------------
+- Find best path with Dijkstra
+- Add genetic algorithm to compete with Dijkstra
