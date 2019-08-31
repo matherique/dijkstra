@@ -6,10 +6,10 @@ Generate a random graph with python and expose the nodes and arcs with flask app
 
 Libraries Used
 ----------------
-- **flask** for server json object with graph information
-- **flask_cors** for enable cors 
-- **random** for randomize some stuff 
-- **os** fot get env variables 
+- **flask**: server json object with graph information
+- **flask_cors**: enable cors 
+- **random**:randomize some stuff 
+- **os**: get env variables 
 
 
 Usage
